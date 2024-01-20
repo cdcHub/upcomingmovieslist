@@ -1,14 +1,17 @@
 import { NativeStackHeaderProps, NativeStackScreenProps } from '@react-navigation/native-stack';
-import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, ActivityIndicator } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { View, Text, FlatList, ActivityIndicator, TouchableOpacity, StyleSheet } from 'react-native';
 import { BottomTabsStackParamList, FullWatchStackParamList } from '../../routes/BottomTabs';
 import { useAppDispatch, useAppSelector } from '../../store/configure';
-import { fetchMoviesList, useMoviesState } from '../../storeSlices/movies';
-import { Loader } from '../../components';
+import { fetchMovieDetailsById, fetchMoviesList, useMoviesState } from '../../storeSlices/movies';
+import { Loader, SafeContainer } from '../../components';
 import { Result } from '../../types/movies@Interfaces.ds';
 import MovieItem from '../../components/Watch/MovieItem';
 import Header from '../../components/Watch/Header';
 import { hp } from '../../dimension';
+import SearchSvg from '../../../assets/svgs/SearchSvg';
+import { AppColors } from '../../constants/AppColors';
+import { AppPoppinsFonts } from '../../constants/AppFonts';
 
 type Props = NativeStackScreenProps<FullWatchStackParamList, 'Watch'>;
 
@@ -22,12 +25,8 @@ const Watch: React.FC<Props> = ({ navigation }) => {
   const [lastPage, setLastPage] = useState<number>(1)
   const [loadingMore, setLoadingMore] = useState<boolean>(false)
 
-  const onSearchclick = () => {
-    navigation.navigate('WatchSearch')
-  }
+  
   useEffect(() => {
-    console.log('last page : ',LastPage);
-    
     setLastPage(LastPage)
   }, [LastPage])
   useEffect(() => {
@@ -46,7 +45,7 @@ const Watch: React.FC<Props> = ({ navigation }) => {
   }, [])
 
   const fetchMoviesListData = async (page: number) => {
-     dispatch(fetchMoviesList({
+    dispatch(fetchMoviesList({
       page,
       onSuccess() {
         setLoadingMore(false)
@@ -75,7 +74,13 @@ const Watch: React.FC<Props> = ({ navigation }) => {
       fetchMoviesListData(nextPage)
     }
   }
-  const renderItem = ({ item }: { item: Result }) => <MovieItem movie={item} />;
+  const onItemClick = (id: number) => {
+    dispatch(fetchMovieDetailsById({
+      id
+    }))
+    navigation.navigate('WatchItemDetails')
+  }
+  const renderItem = ({ item }: { item: Result }) => <MovieItem movie={item} onItemClick={() => onItemClick(item.id)} />;
   const ListFooterComponent = () => {
     return loadingMore ? <View style={{
       height: hp('7%')
@@ -84,9 +89,21 @@ const Watch: React.FC<Props> = ({ navigation }) => {
     </View> : null
   }
 
-
+  const WatchHeader =() =>{
+    return (
+        <View style={styles.WatchHeaderBg}>
+            <Text style={styles.title}>Watch</Text>
+            <TouchableOpacity
+                onPress={() => {
+                    navigation.navigate('WatchSearch')
+                }} style={styles.searchBtn}>
+                <SearchSvg />
+            </TouchableOpacity>
+        </View>)
+}
   return (
-    <View>
+    <SafeContainer>
+      <WatchHeader />
       <FlatList
         data={movies_list}
         keyExtractor={(item: Result, index: number) => `${item?.id?.toString()}-${index}`}
@@ -95,8 +112,27 @@ const Watch: React.FC<Props> = ({ navigation }) => {
         ListFooterComponent={ListFooterComponent}
         onEndReachedThreshold={0.1}
       />
-    </View>
+    </SafeContainer>
   );
 };
 
 export default Watch;
+
+const styles = StyleSheet.create({
+  title: {
+    fontFamily: AppPoppinsFonts.Regular,
+    fontWeight: '500',
+    fontSize: hp('2%')
+},
+  WatchHeaderBg: {
+    backgroundColor: AppColors.white,
+    padding: hp('1%'),
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+},
+searchBtn: {
+    padding: hp('1%'),
+},
+})
+

@@ -6,11 +6,11 @@ import { store } from './src/store/configure'
 
 const App = () => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    // <SafeAreaView style={{ flex: 1 }}>
       <Provider store={store}>
         <BottomTabs />
       </Provider>
-    </SafeAreaView>
+    // </SafeAreaView>
   )
 }
 

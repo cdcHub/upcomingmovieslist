@@ -1,5 +1,5 @@
 // MovieItem.tsx
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View, Text, StyleSheet, Image, ImageBackground, ViewStyle, ImageStyle, TouchableOpacity } from 'react-native';
 import { Result } from '../../types/movies@Interfaces.ds';
 import { ImageBaseUrl } from '../../constants/AppContants';
@@ -11,20 +11,20 @@ import DotsSvg from '../../../assets/svgs/DotsSvg';
 
 interface MovieItemProps {
     movie: Result;
+    onItemClick: () => void;
     containerStyle?: ViewStyle
     imageStyle?: ImageStyle;
     type?: 'list' | 'default';
 }
 
-const MovieItem: React.FC<MovieItemProps> = ({ movie, containerStyle, imageStyle, type = 'default' }) => {
+const MovieItem: React.FC<MovieItemProps> = ({ movie, containerStyle, onItemClick, imageStyle, type = 'default' }) => {
 
-    const onItemClick = () => {
-        console.log('Id : ', movie?.id);
-
+    const onPress = () => {
+        onItemClick && onItemClick()
     }
     if (type == 'list') {
         return (
-            <TouchableOpacity activeOpacity={1} onPress={onItemClick} style={[styles.listContainer, containerStyle && containerStyle]}>
+            <TouchableOpacity activeOpacity={1} onPress={onPress} style={[styles.listContainer, containerStyle && containerStyle]}>
                 <Image
                     source={{ uri: `${ImageBaseUrl}${movie?.poster_path}` }}
                     style={[styles.listImage, imageStyle && imageStyle]}
@@ -41,7 +41,7 @@ const MovieItem: React.FC<MovieItemProps> = ({ movie, containerStyle, imageStyle
             </TouchableOpacity>)
     }
     return (
-        <TouchableOpacity activeOpacity={1} onPress={onItemClick} style={[styles.container, containerStyle && containerStyle]}>
+        <TouchableOpacity activeOpacity={1} onPress={onPress} style={[styles.container, containerStyle && containerStyle]}>
             <ImageBackground
                 source={{ uri: `${ImageBaseUrl}${movie?.poster_path}` }}
                 style={[styles.img, imageStyle && imageStyle]}

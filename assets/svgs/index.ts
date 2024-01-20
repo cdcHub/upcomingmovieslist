@@ -6,6 +6,7 @@ import SearchSvg from './SearchSvg'
 import CrossSvg from './CrossSvg'
 import DotsSvg from './DotsSvg'
 import LeftArrowSvg from './LeftArrowSvg'
+import PlaySvg from './PlaySvg'
 export const Svgs = {
     Dashboard,
     List,
@@ -14,5 +15,6 @@ export const Svgs = {
     SearchSvg,
     CrossSvg,
     DotsSvg,
-    LeftArrowSvg
+    LeftArrowSvg,
+    PlaySvg,
 }

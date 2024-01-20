@@ -60,7 +60,9 @@ export const fetchMovieDetailsById = createAsyncThunk<MovieDetailsResponse, Movi
     async (params: MovieDetailsActions, { rejectWithValue, getState }) => {
         try {
             const { id, onFail, onSuccess } = params
-            const response = await MyServer.get<MovieDetailsResponse>(`${id}?api_key=${API_KEY}}`);
+      
+            
+            const response = await MyServer.get<MovieDetailsResponse>(`${id}?api_key=${API_KEY}`);
 
             onSuccess && onSuccess()
             return response.data
