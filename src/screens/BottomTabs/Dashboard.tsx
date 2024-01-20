@@ -9,7 +9,6 @@ type Props = NativeStackScreenProps<BottomTabsStackParamList, 'Dashboard'>;
 const Dashboard: React.FC<Props> = (props) => {
     return (
         <View>
-            <Text>Dashboard</Text>
             <Text>No Data Found</Text>
         </View>
     );
