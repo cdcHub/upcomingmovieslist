@@ -1,12 +1,9 @@
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native'
 import React from 'react'
+import BottomTabs from './src/routes/BottomTabs'
 
 const App = () => {
-  return (
-    <SafeAreaView>
-      <Text>App</Text>
-    </SafeAreaView>
-  )
+  return  <BottomTabs/>
 }
 
 export default App
