@@ -1,3 +1,3 @@
 export const Urls = {
-    upcoming: 'upcoming?api_key='
+    upcoming: 'upcoming?api_key=',
 }

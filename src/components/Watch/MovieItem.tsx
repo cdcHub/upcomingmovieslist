@@ -18,26 +18,30 @@ interface MovieItemProps {
 
 const MovieItem: React.FC<MovieItemProps> = ({ movie, containerStyle, imageStyle, type = 'default' }) => {
 
+    const onItemClick = () => {
+        console.log('Id : ', movie?.id);
+
+    }
     if (type == 'list') {
         return (
-            <View style={[styles.listContainer, containerStyle && containerStyle]}>
+            <TouchableOpacity activeOpacity={1} onPress={onItemClick} style={[styles.listContainer, containerStyle && containerStyle]}>
                 <Image
                     source={{ uri: `${ImageBaseUrl}${movie?.poster_path}` }}
                     style={[styles.listImage, imageStyle && imageStyle]}
                 />
                 <View style={styles.col2}>
-                <Text numberOfLines={1} style={styles.listTitle}>{movie.title}</Text>
-                <Text numberOfLines={1} style={styles.listsubTitle}>{'Sci-Fi'}</Text>
+                    <Text numberOfLines={1} style={styles.listTitle}>{movie.title}</Text>
+                    <Text numberOfLines={1} style={styles.listsubTitle}>{'Sci-Fi'}</Text>
                 </View>
 
                 <TouchableOpacity>
-                    <DotsSvg/>
+                    <DotsSvg />
                 </TouchableOpacity>
                 {/* <Text style={styles.title}>{movie.title}</Text> */}
-            </View>)
+            </TouchableOpacity>)
     }
     return (
-        <View style={[styles.container, containerStyle && containerStyle]}>
+        <TouchableOpacity activeOpacity={1} onPress={onItemClick} style={[styles.container, containerStyle && containerStyle]}>
             <ImageBackground
                 source={{ uri: `${ImageBaseUrl}${movie?.poster_path}` }}
                 style={[styles.img, imageStyle && imageStyle]}
@@ -47,7 +51,7 @@ const MovieItem: React.FC<MovieItemProps> = ({ movie, containerStyle, imageStyle
                     <Text style={styles.title}>{movie.title}</Text>
                 </LinearGradient>
             </ImageBackground>
-        </View>
+        </TouchableOpacity>
     );
 };
 
@@ -90,7 +94,7 @@ const styles = StyleSheet.create({
     listContainer: {
         flexDirection: 'row',
         margin: hp('2%'),
-        alignItems:'center'
+        alignItems: 'center'
     },
     listTitle: {
         fontFamily: AppPoppinsFonts.Regular,
@@ -99,11 +103,11 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         fontSize: hp('2%')
     },
-    col2:{
-        marginHorizontal:hp('1%'),
-        flex:1
+    col2: {
+        marginHorizontal: hp('1%'),
+        flex: 1
     },
-    listsubTitle:{
+    listsubTitle: {
         fontFamily: AppPoppinsFonts.Regular,
         color: AppColors.searchTextColor,
 

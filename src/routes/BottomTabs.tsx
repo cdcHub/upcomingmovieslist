@@ -7,7 +7,7 @@ import MediaLibrary from '../screens/BottomTabs/MediaLibrary';
 import Watch from '../screens/BottomTabs/Watch';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import CustomBottomTab from './components/CustomBottomTab';
-import { WatchSearch } from '../screens/BottomTabs/WatchSubScreens';
+import { WatchItemDetails, WatchSearch } from '../screens/BottomTabs/WatchSubScreens';
 import Header from '../components/Watch/Header';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { AppPoppinsFonts } from '../constants/AppFonts';
@@ -24,6 +24,7 @@ export type BottomTabsStackParamList = {
 export type FullWatchStackParamList = {
     Watch: undefined;
     WatchSearch: undefined;
+    WatchItemDetails: undefined;
     // More: undefined;
     // MediaLibrary: undefined;
 };
@@ -58,6 +59,13 @@ const FullWatchStack = () => {
                         return <Header props={props}/>
                     }
                 }}
+            />
+            <WatchStack.Screen name='WatchItemDetails' component={WatchItemDetails}
+                // options={{
+                //     header(props) {
+                //         return <Header props={props}/>
+                //     }
+                // }}
             />
         </WatchStack.Navigator>
     )
