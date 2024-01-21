@@ -1,4 +1,4 @@
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useCallback, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FullWatchStackParamList } from '../../../routes/BottomTabs';
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginTop: hp('5%'),
+        marginTop: Platform.OS === 'ios' ? hp('5%') : 0,
     },
     searchBtn: {
         padding: hp('1%'),
@@ -173,8 +173,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     title: {
-        fontFamily: AppPoppinsFonts.Regular,
-        fontWeight: '500',
+        fontFamily: AppPoppinsFonts.SemiBold,
+        // fontWeight: '500',
         fontSize: hp('2%')
     },
     subText: {
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
         fontWeight: '500'
     },
     cinemaHallPrice: {
-
+        fontFamily: AppPoppinsFonts.Regular
     },
     priceContainer: {
         flexDirection: 'row',

@@ -1,9 +1,9 @@
-import { Image, ImageBackground, ScrollView, StatusBar, StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native'
+import { Image, ImageBackground, Platform, ScrollView, StatusBar, StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native'
 import React from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FullWatchStackParamList } from '../../../routes/BottomTabs';
-import { useAppSelector } from '../../../store/configure';
-import { useMoviesState } from '../../../storeSlices/movies';
+import { useAppDispatch, useAppSelector } from '../../../store/configure';
+import { openVideoPlayer, useMoviesState } from '../../../storeSlices/movies';
 import { Loader } from '../../../components';
 import { hp, wp } from '../../../dimension';
 import { ImageBaseUrl } from '../../../constants/AppContants';
@@ -18,6 +18,14 @@ type Props = NativeStackScreenProps<FullWatchStackParamList, 'WatchItemDetails'>
 
 const WatchItemDetails: React.FC<Props> = ({ navigation }) => {
     const { movie_details_list_loader, movieDetails, } = useAppSelector(useMoviesState)
+
+    const dispatch = useAppDispatch()
+
+    const onWatchClick = () => {
+        dispatch(openVideoPlayer({
+            status: true
+        }))
+    }
 
     if (movie_details_list_loader) {
         return <Loader />
@@ -71,13 +79,13 @@ const WatchItemDetails: React.FC<Props> = ({ navigation }) => {
                                     type='fill'
                                     onPress={() => {
                                         navigation.navigate('WatchTicket')
-                                     }}
+                                    }}
                                 />
 
                                 <Button
                                     text='Watch Trailer'
                                     type='outline'
-                                    onPress={() => { }}
+                                    onPress={onWatchClick}
                                     icon={() => <PlaySvg />}
                                 />
                                 <View style={styles.spaceV} />
@@ -92,7 +100,9 @@ const WatchItemDetails: React.FC<Props> = ({ navigation }) => {
     const MovieDetailHeader = () => {
 
         return (
-            <View style={[styles.WatchHeaderBg, { justifyContent: 'flex-start' }]}>
+            <View style={[styles.WatchHeaderBg, {
+                justifyContent: 'flex-start',
+            }]}>
                 <TouchableOpacity
                     onPress={() => {
                         navigation.goBack()
@@ -219,7 +229,8 @@ const styles = StyleSheet.create({
         flex: 1
     },
     topContainer: {
-        height: hp('50%')
+        height: hp('50%'),
+
     },
     img: {
         flex: 1,
@@ -243,7 +254,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginTop: hp('5%'),
+        marginTop: Platform.OS === 'ios' ? hp('5%') : 0,
     },
     searchBtn: {
         padding: hp('1%'),

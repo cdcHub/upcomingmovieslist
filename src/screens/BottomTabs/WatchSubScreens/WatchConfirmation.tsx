@@ -1,4 +1,4 @@
-import { Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FullWatchStackParamList } from '../../../routes/BottomTabs';
@@ -70,9 +70,9 @@ const WatchConfirmation: React.FC<Props> = ({ navigation, route }) => {
     }
     const PiceTag = () => {
         return (
-            <TouchableOpacity style={[styles.rowBtn, { height: hp('7%'), flexDirection: 'column' }]}>
+            <TouchableOpacity style={[styles.rowBtn, { height: hp('7%'), flexDirection: 'column',justifyContent:'center' }]}>
                 <Text style={{ fontFamily: AppPoppinsFonts.Regular, opacity: .7 }}>{'Total Price'}</Text>
-                <Text style={[styles.catText, { fontSize: hp('2.5%') }]}>{'$ 50'}</Text>
+                <Text style={[styles.catText, { fontSize: hp('2%') }]}>{'$ 50'}</Text>
             </TouchableOpacity >
         )
     }
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginTop: hp('5%'),
+        marginTop: Platform.OS === 'ios' ? hp('5%') : 0,
     },
     searchBtn: {
         padding: hp('1%'),
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: hp('2%'),
         justifyContent: 'center'
     },
-   chairsContainer: {
+    chairsContainer: {
         flexWrap: 'wrap',
         flexDirection: 'row',
         alignItems: 'center',

@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, FlatList, ActivityIndicator, TouchableOpacity, StyleSheet } from 'react-native';
 import { BottomTabsStackParamList, FullWatchStackParamList } from '../../routes/BottomTabs';
 import { useAppDispatch, useAppSelector } from '../../store/configure';
-import { fetchMovieDetailsById, fetchMoviesList, isSearchBoxOpen, useMoviesState } from '../../storeSlices/movies';
+import { fetchMovieDetailsById, fetchMovieVideosById, fetchMoviesList, isSearchBoxOpen, useMoviesState } from '../../storeSlices/movies';
 import { Loader, SafeContainer } from '../../components';
 import { Result } from '../../types/movies@Interfaces.ds';
 import MovieItem from '../../components/Watch/MovieItem';
@@ -25,7 +25,7 @@ const Watch: React.FC<Props> = ({ navigation }) => {
   const [lastPage, setLastPage] = useState<number>(1)
   const [loadingMore, setLoadingMore] = useState<boolean>(false)
 
-  
+
   useEffect(() => {
     setLastPage(LastPage)
   }, [LastPage])
@@ -78,7 +78,7 @@ const Watch: React.FC<Props> = ({ navigation }) => {
     dispatch(fetchMovieDetailsById({
       id
     }))
-    // dispatch(isSearchBoxOpen(true))
+  
     navigation.navigate('WatchItemDetails')
   }
   const renderItem = ({ item }: { item: Result }) => <MovieItem movie={item} onItemClick={() => onItemClick(item.id)} />;
@@ -90,18 +90,18 @@ const Watch: React.FC<Props> = ({ navigation }) => {
     </View> : null
   }
 
-  const WatchHeader =() =>{
+  const WatchHeader = () => {
     return (
-        <View style={styles.WatchHeaderBg}>
-            <Text style={styles.title}>Watch</Text>
-            <TouchableOpacity
-                onPress={() => {
-                    navigation.navigate('WatchSearch')
-                }} style={styles.searchBtn}>
-                <SearchSvg />
-            </TouchableOpacity>
-        </View>)
-}
+      <View style={styles.WatchHeaderBg}>
+        <Text style={styles.title}>Watch</Text>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('WatchSearch')
+          }} style={styles.searchBtn}>
+          <SearchSvg />
+        </TouchableOpacity>
+      </View>)
+  }
   return (
     <SafeContainer>
       <WatchHeader />
@@ -121,19 +121,18 @@ export default Watch;
 
 const styles = StyleSheet.create({
   title: {
-    fontFamily: AppPoppinsFonts.Regular,
-    fontWeight: '500',
+    fontFamily: AppPoppinsFonts.SemiBold,
     fontSize: hp('2%')
-},
+  },
   WatchHeaderBg: {
     backgroundColor: AppColors.white,
     padding: hp('1%'),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between'
-},
-searchBtn: {
+  },
+  searchBtn: {
     padding: hp('1%'),
-},
+  },
 })
 

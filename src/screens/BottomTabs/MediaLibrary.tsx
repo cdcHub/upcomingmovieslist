@@ -8,7 +8,6 @@ type Props = NativeStackScreenProps<BottomTabsStackParamList, 'MediaLibrary'>;
 const MediaLibrary: React.FC<Props> = (props) => {
   return (
     <SafeContainer>
-      <Text>Media Library</Text>
       <Text>No Data Found</Text>
     </SafeContainer>
   );

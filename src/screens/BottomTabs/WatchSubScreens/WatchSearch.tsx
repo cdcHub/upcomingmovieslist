@@ -2,7 +2,7 @@ import { FlatList, StyleSheet, Text, View } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Result } from '../../../types/movies@Interfaces.ds';
 import { useAppDispatch, useAppSelector } from '../../../store/configure';
-import { fetchMovieDetailsById, useMoviesState } from '../../../storeSlices/movies';
+import { fetchMovieDetailsById, isSearchBoxOpen, useMoviesState } from '../../../storeSlices/movies';
 import MovieItem from '../../../components/Watch/MovieItem';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FullWatchStackParamList } from '../../../routes/BottomTabs';
@@ -30,20 +30,11 @@ const WatchSearch: React.FC<Props> = (props) => {
         navigation.navigate('WatchItemDetails')
     }
     useEffect(() => {
+        setSearchText('')
+        dispatch(isSearchBoxOpen(true))
+       
 
-        // navigation.setOptions({
-        //     header(props) {
-        //         return <Header
-        //             props={props}
-        //             onSearchclick={onSearchclick}
-        //             onChangeText={setSearchText}
-        //             title={!isMoviesSearchBoxOPened ? `${getSearchData()?.length} Results Found` : ''}
-
-        //         />
-        //     },
-        // })
-
-    }, [isMoviesSearchBoxOPened])
+    }, [])
     const renderItem = ({ item }: { item: Result }) => <MovieItem movie={item}
         containerStyle={{
             flex: 1,
@@ -62,28 +53,7 @@ const WatchSearch: React.FC<Props> = (props) => {
         return movies_list?.filter((movie) => movie?.title?.toLowerCase().includes(smallLetters))
     }, [searchText])
 
-    // if (searchText) {
-    //     return (
-    //         <View style={{ flex: 1, }}>
-    //             <View style={styles.searchTextContainer}>
-    //                 <Text style={styles.searchText}>Top results</Text>
-    //                 <View style={styles.line} />
-    //             </View>
-    //             <FlatList
-    //                 data={getSearchData()}
-    //                 keyExtractor={(item: Result, index: number) => `${item?.id?.toString()}-${index}`}
-    //                 renderItem={renderItem}
-    //                 ListEmptyComponent={() => {
-    //                     return <View style={styles.center}>
-    //                         <Text style={{ textAlign: 'center' }}>
-    //                             No data found!
-    //                         </Text>
-    //                     </View>
-    //                 }}
-    //             />
-    //         </View>
-    //     )
-    // }
+    
 
     return (
         <View style={{flex:1}}>

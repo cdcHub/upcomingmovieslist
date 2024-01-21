@@ -39,7 +39,7 @@ const CustomBottomTab: React.FC<BottomTabBarProps> = ({ state, descriptors, navi
             RenderSvg = Svgs.Dashboard
             break;
           case 1:
-            RenderSvg = Svgs.Watch
+            RenderSvg = Svgs.WatchSvg
             break;
           case 2:
             RenderSvg = Svgs.MediaLibrary

@@ -9,7 +9,6 @@ type Props = NativeStackScreenProps<BottomTabsStackParamList, 'More'>;
 const More: React.FC<Props> = (props) => {
   return (
     <SafeContainer>
-      <Text>More</Text>
       <Text>No Data Found</Text>
     </SafeContainer>
   );

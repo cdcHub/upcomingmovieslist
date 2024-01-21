@@ -1,6 +1,6 @@
 import Dashboard from './Dashboard'
 import MediaLibrary from './MediaLibrary'
-import Watch from './Watch'
+import WatchSvg from './WatchSvg'
 import List from './List'
 import SearchSvg from './SearchSvg'
 import CrossSvg from './CrossSvg'
@@ -11,7 +11,7 @@ export const Svgs = {
     Dashboard,
     List,
     MediaLibrary,
-    Watch,
+    WatchSvg,
     SearchSvg,
     CrossSvg,
     DotsSvg,
