@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, FlatList, ActivityIndicator, TouchableOpacity, StyleSheet } from 'react-native';
 import { BottomTabsStackParamList, FullWatchStackParamList } from '../../routes/BottomTabs';
 import { useAppDispatch, useAppSelector } from '../../store/configure';
-import { fetchMovieDetailsById, fetchMoviesList, useMoviesState } from '../../storeSlices/movies';
+import { fetchMovieDetailsById, fetchMoviesList, isSearchBoxOpen, useMoviesState } from '../../storeSlices/movies';
 import { Loader, SafeContainer } from '../../components';
 import { Result } from '../../types/movies@Interfaces.ds';
 import MovieItem from '../../components/Watch/MovieItem';
@@ -78,6 +78,7 @@ const Watch: React.FC<Props> = ({ navigation }) => {
     dispatch(fetchMovieDetailsById({
       id
     }))
+    // dispatch(isSearchBoxOpen(true))
     navigation.navigate('WatchItemDetails')
   }
   const renderItem = ({ item }: { item: Result }) => <MovieItem movie={item} onItemClick={() => onItemClick(item.id)} />;

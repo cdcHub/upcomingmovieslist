@@ -7,7 +7,7 @@ import MediaLibrary from '../screens/BottomTabs/MediaLibrary';
 import Watch from '../screens/BottomTabs/Watch';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import CustomBottomTab from './components/CustomBottomTab';
-import { WatchItemDetails, WatchSearch, WatchTicket } from '../screens/BottomTabs/WatchSubScreens';
+import { WatchConfirmation, WatchItemDetails, WatchSearch, WatchTicket } from '../screens/BottomTabs/WatchSubScreens';
 import Header from '../components/Watch/Header';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { AppPoppinsFonts } from '../constants/AppFonts';
@@ -15,6 +15,7 @@ import { hp } from '../dimension';
 import { AppColors } from '../constants/AppColors';
 import SearchSvg from '../../assets/svgs/SearchSvg';
 import LeftArrowSvg from '../../assets/svgs/LeftArrowSvg';
+import { CinemaHallSettingType } from '../constants/Dummydata';
 
 export type BottomTabsStackParamList = {
     Dashboard: undefined;
@@ -27,6 +28,7 @@ export type FullWatchStackParamList = {
     WatchSearch: undefined;
     WatchItemDetails: undefined;
     WatchTicket: undefined;
+    WatchConfirmation: undefined
     // More: undefined;
     // MediaLibrary: undefined;
 };
@@ -37,58 +39,16 @@ const WatchStack = createNativeStackNavigator<FullWatchStackParamList>()
 const FullWatchStack = () => {
     return (
         <WatchStack.Navigator screenOptions={{
-            // headerShown:false
+            headerShown: false,
             headerStyle: {
                 backgroundColor: AppColors.white
             }
         }}>
-            <WatchStack.Screen name='Watch' component={Watch}
-                options={{
-                    headerShown: false,
-
-                    header(props) {
-                        return (
-                            <View style={styles.WatchHeaderBg}>
-                                <Text style={styles.title}>Watch</Text>
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        props.navigation.navigate('WatchSearch')
-                                    }} style={styles.searchBtn}>
-                                    <SearchSvg />
-                                </TouchableOpacity>
-                            </View>)
-                    }
-                }}
-            />
-            <WatchStack.Screen name='WatchSearch' component={WatchSearch}
-                options={{
-                    header(props) {
-                        return <Header props={props} />
-                    }
-                }}
-            />
-            <WatchStack.Screen name='WatchItemDetails' component={WatchItemDetails}
-                options={{
-                    headerShown: false,
-                    header(props) {
-                        return (
-                            <View style={[styles.WatchHeaderBg, { justifyContent: 'flex-start' }]}>
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        props.navigation.goBack()
-                                    }} style={styles.searchBtn}>
-                                    <LeftArrowSvg fillColor={AppColors.white} />
-                                </TouchableOpacity>
-                                <Text style={styles.title}>Watch</Text>
-                            </View>)
-                    }
-                }}
-            />
-            <WatchStack.Screen name='WatchTicket' component={WatchTicket}
-                options={{
-                    headerShown: false
-                }}
-            />
+            <WatchStack.Screen name='Watch' component={Watch} />
+            <WatchStack.Screen name='WatchSearch' component={WatchSearch} />
+            <WatchStack.Screen name='WatchItemDetails' component={WatchItemDetails} />
+            <WatchStack.Screen name='WatchTicket' component={WatchTicket} />
+            <WatchStack.Screen name='WatchConfirmation' component={WatchConfirmation} />
         </WatchStack.Navigator>
     )
 }

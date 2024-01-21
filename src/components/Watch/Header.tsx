@@ -45,61 +45,61 @@ const Header: React.FC<IHeader> = (props) => {
         if (!text) {
             return
         }
-        
+
         toggleSearch()
 
     }
 
     return (
-        <>
-
-            <View style={styles.container} >
 
 
-                <View style={[styles.textInputContainer, {
-                    backgroundColor: isSearchOpen ? AppColors.lightOffWhite : AppColors.white
-                }]}>
-                    {
-                        !!title ?
+        <View style={styles.container} >
+
+
+            <View style={[styles.textInputContainer, {
+                backgroundColor: isSearchOpen ? AppColors.lightOffWhite : AppColors.white
+            }]}>
+                {
+                    !!title ?
+                        <TouchableOpacity
+                            onPress={() => {
+                                toggleSearch()
+
+                            }} style={[styles.searchedBtn]}>
+                            <LeftArrowSvg fillColor={AppColors.black} />
+                            <Text style={styles.title}>{title}</Text>
+                        </TouchableOpacity>
+
+                        :
+                        <>
                             <TouchableOpacity
-                                onPress={() => {
-                                    toggleSearch()
-
-                                }} style={[styles.searchedBtn]}>
-                                <LeftArrowSvg />
-                                <Text style={styles.title}>{title}</Text>
+                                disabled={isSearchOpen}
+                                onPress={toggleSearch}
+                                style={styles.searchBtn}>
+                                <SearchSvg />
                             </TouchableOpacity>
 
-                            :
-                            <>
-                                <TouchableOpacity
-                                    disabled={isSearchOpen}
-                                    onPress={toggleSearch}
-                                    style={styles.searchBtn}>
-                                    <SearchSvg />
-                                </TouchableOpacity>
-
-                                <TextInput
-                                    value={text}
-                                    onChangeText={setText}
-                                    style={styles.input}
-                                    returnKeyType='go'
-                                    onSubmitEditing={onSubmitEditing}
-                                    placeholder='TV shows, movies and more'
-                                />
-                                <TouchableOpacity
-                                    disabled={!isSearchOpen}
-                                    onPress={onCrossClick} style={styles.searchBtn}>
-                                    <CrossSvg />
-                                </TouchableOpacity>
-                            </>
-                    }
+                            <TextInput
+                                value={text}
+                                onChangeText={setText}
+                                style={styles.input}
+                                returnKeyType='go'
+                                onSubmitEditing={onSubmitEditing}
+                                placeholder='TV shows, movies and more'
+                            />
+                            <TouchableOpacity
+                                disabled={!isSearchOpen}
+                                onPress={onCrossClick} style={styles.searchBtn}>
+                                <CrossSvg />
+                            </TouchableOpacity>
+                        </>
+                }
 
 
 
-                </View>
             </View>
-        </>
+        </View>
+
     )
 }
 
@@ -107,6 +107,7 @@ export default Header
 
 const styles = StyleSheet.create({
     container: {
+        paddingTop: Platform.OS === 'ios' ? hp('7%') : 20,
         backgroundColor: AppColors.white,
         justifyContent: 'space-between',
         alignItems: 'center',

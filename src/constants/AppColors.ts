@@ -6,10 +6,11 @@ export const AppColors = {
     lightOffWhite: '#F6F6FA',
     darkOffWhite: '#DBDBDF',
 
-    inActive:'#827D88',
-    active:'#FFFFFF',
-    searchTextColor:'#202C43'
-  
+    inActive: '#827D88',
+    active: '#FFFFFF',
+    searchTextColor: '#202C43',
+    dateBgColor: '#A6A6A61A'
+
 
 
 }

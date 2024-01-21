@@ -5,6 +5,7 @@ import { API_KEY } from "@env"
 import { Urls } from '../backend/Urls'
 import { MovieDetailsResponse, Result, UpcomingMoviesResponse } from '../types/movies@Interfaces.ds'
 import { RootState, store } from '../store/configure'
+import { CinemaHallSettingType } from '../constants/Dummydata'
 
 export interface MoviesState {
     movies_list_loader: boolean;
@@ -12,7 +13,12 @@ export interface MoviesState {
     isMoviesSearchBoxOPened: boolean;
     LastPage: number;
     movie_details_list_loader: boolean;
-    movieDetails: MovieDetailsResponse | null
+    movieDetails: MovieDetailsResponse | null;
+
+    confirmationData: null | {
+        date: string,
+        hall: CinemaHallSettingType
+    }
 }
 
 const initialState: MoviesState = {
@@ -22,7 +28,8 @@ const initialState: MoviesState = {
     LastPage: 1,
 
     movie_details_list_loader: false,
-    movieDetails: null
+    movieDetails: null,
+    confirmationData: null,
 
 }
 
@@ -60,8 +67,8 @@ export const fetchMovieDetailsById = createAsyncThunk<MovieDetailsResponse, Movi
     async (params: MovieDetailsActions, { rejectWithValue, getState }) => {
         try {
             const { id, onFail, onSuccess } = params
-      
-            
+
+
             const response = await MyServer.get<MovieDetailsResponse>(`${id}?api_key=${API_KEY}`);
 
             onSuccess && onSuccess()
@@ -78,7 +85,10 @@ export const moviesSlice = createSlice({
     reducers: {
         isSearchBoxOpen: (state, action: PayloadAction<boolean>) => {
             state.isMoviesSearchBoxOPened = action.payload
-        }
+        },
+        setConfirmationData: (state, action: PayloadAction<null | { date: string, hall: CinemaHallSettingType }>) => {
+            state.confirmationData = action.payload
+        },
     },
     extraReducers(builder) {
         builder.addCase(fetchMoviesList.pending, (state, action) => {
@@ -115,7 +125,7 @@ export const moviesSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { isSearchBoxOpen } = moviesSlice.actions
+export const { isSearchBoxOpen,setConfirmationData } = moviesSlice.actions
 
 export const useMoviesState = (state: RootState) => state.movies
 
